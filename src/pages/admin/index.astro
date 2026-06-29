@@ -353,8 +353,8 @@ const bootstrap = JSON.stringify({ menu: menuItems, promos: promotions });
       toast('El archivo debe ser una imagen.', 'error');
       return;
     }
-    if (file.size > 5 * 1024 * 1024) {
-      toast('La imagen supera el límite de 5 MB.', 'error');
+    if (file.size > 4 * 1024 * 1024) {
+      toast('La imagen supera el límite de 4 MB.', 'error');
       return;
     }
     dropzone.querySelector('span')!.textContent = 'Subiendo…';
@@ -362,8 +362,8 @@ const bootstrap = JSON.stringify({ menu: menuItems, promos: promotions });
     body.append('file', file);
     try {
       const res = await fetch('/api/admin/media', { method: 'POST', body });
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.error || 'Error al subir');
+      const data = await res.json().catch(() => ({}));
+      if (!res.ok) throw new Error(data.error || `Error al subir (${res.status})`);
       setImage(data.url);
       if (!fImageAlt.value.trim()) fImageAlt.value = file.name.replace(/\.[^.]+$/, '');
       toast('Imagen subida.');

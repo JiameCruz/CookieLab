@@ -1,9 +1,8 @@
 import { Pool, neonConfig } from '@neondatabase/serverless';
-import ws from 'ws';
 import type { MenuCategory, MenuItem, Promotion } from '@/lib/menu-types';
 
-// El driver serverless necesita un WebSocket al usar Pool/Client en Node.
-neonConfig.webSocketConstructor = ws;
+// En Vercel/serverless, WebSocket (Pool+ws) falla; HTTP fetch sí funciona.
+neonConfig.poolQueryViaFetch = true;
 
 const connectionString = import.meta.env.DATABASE_URL ?? process.env.DATABASE_URL;
 
