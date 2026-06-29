@@ -1,0 +1,556 @@
+---
+import AdminLayout from '@/layouts/AdminLayout.astro';
+import { getMenuItems, getPromotions } from '@/lib/db';
+import { formatPrice, menuCategories } from '@/lib/menu-types';
+
+export const prerender = false;
+
+const [menuItems, promotions] = await Promise.all([getMenuItems(), getPromotions()]);
+const bootstrap = JSON.stringify({ menu: menuItems, promos: promotions });
+---
+
+<AdminLayout title="Panel">
+  <div class="container">
+    <!-- ===== Menú ===== -->
+    <section class="admin-section" aria-labelledby="menu-title">
+      <div class="admin-section__head">
+        <div>
+          <h1 class="admin-section__title" id="menu-title">Menú</h1>
+          <span class="admin-section__count">{menuItems.length} productos</span>
+        </div>
+        <button type="button" class="abtn abtn--primary" data-new="menu">Añadir producto</button>
+      </div>
+
+      {
+        menuItems.length === 0 ? (
+          <div class="admin-empty">
+            <p class="admin-empty__title">Aún no hay productos</p>
+            <p class="admin-empty__text">Añade el primero para que aparezca en el menú del sitio.</p>
+            <button type="button" class="abtn abtn--primary" data-new="menu">
+              Añadir producto
+            </button>
+          </div>
+        ) : (
+          <div class="admin-list">
+            {menuItems.map((item) => (
+              <div class="admin-row" data-entity="menu" data-id={item.id}>
+                <img
+                  class="admin-row__thumb"
+                  src={item.image.src}
+                  alt={item.image.alt}
+                  width="56"
+                  height="56"
+                  loading="lazy"
+                  decoding="async"
+                />
+                <div class="admin-row__body">
+                  <h2 class="admin-row__title">{item.name}</h2>
+                  <div class="admin-row__meta">
+                    <span class="admin-chip">{item.category}</span>
+                    {item.description && <p class="admin-row__desc">{item.description}</p>}
+                  </div>
+                </div>
+                <span class="admin-row__price">{formatPrice(item.price)}</span>
+                <div class="admin-row__actions">
+                  <button type="button" class="abtn abtn--ghost abtn--sm" data-edit>
+                    Editar
+                  </button>
+                  <button type="button" class="abtn abtn--danger abtn--sm" data-delete>
+                    Eliminar
+                  </button>
+                </div>
+                <div class="admin-confirm">
+                  <span>¿Eliminar “{item.name}”?</span>
+                  <button type="button" class="abtn abtn--danger abtn--sm" data-confirm-delete>
+                    Sí, eliminar
+                  </button>
+                  <button type="button" class="abtn abtn--ghost abtn--sm" data-cancel-delete>
+                    Cancelar
+                  </button>
+                </div>
+              </div>
+            ))}
+          </div>
+        )
+      }
+    </section>
+
+    <!-- ===== Promociones ===== -->
+    <section class="admin-section" aria-labelledby="promos-title">
+      <div class="admin-section__head">
+        <div>
+          <h1 class="admin-section__title" id="promos-title">Promociones</h1>
+          <span class="admin-section__count">{promotions.length} promociones</span>
+        </div>
+        <button type="button" class="abtn abtn--primary" data-new="promo">Añadir promoción</button>
+      </div>
+
+      {
+        promotions.length === 0 ? (
+          <div class="admin-empty">
+            <p class="admin-empty__title">Aún no hay promociones</p>
+            <p class="admin-empty__text">Crea una promo para destacarla en el sitio.</p>
+            <button type="button" class="abtn abtn--primary" data-new="promo">
+              Añadir promoción
+            </button>
+          </div>
+        ) : (
+          <div class="admin-list">
+            {promotions.map((promo) => (
+              <div class="admin-row" data-entity="promo" data-id={promo.id}>
+                <img
+                  class="admin-row__thumb"
+                  src={promo.image.src}
+                  alt={promo.image.alt}
+                  width="56"
+                  height="56"
+                  loading="lazy"
+                  decoding="async"
+                />
+                <div class="admin-row__body">
+                  <h2 class="admin-row__title">{promo.name}</h2>
+                  <div class="admin-row__meta">
+                    {promo.badge && <span class="admin-chip">{promo.badge}</span>}
+                    {promo.description && <p class="admin-row__desc">{promo.description}</p>}
+                  </div>
+                </div>
+                <div class="admin-row__actions">
+                  <button type="button" class="abtn abtn--ghost abtn--sm" data-edit>
+                    Editar
+                  </button>
+                  <button type="button" class="abtn abtn--danger abtn--sm" data-delete>
+                    Eliminar
+                  </button>
+                </div>
+                <div class="admin-confirm">
+                  <span>¿Eliminar “{promo.name}”?</span>
+                  <button type="button" class="abtn abtn--danger abtn--sm" data-confirm-delete>
+                    Sí, eliminar
+                  </button>
+                  <button type="button" class="abtn abtn--ghost abtn--sm" data-cancel-delete>
+                    Cancelar
+                  </button>
+                </div>
+              </div>
+            ))}
+          </div>
+        )
+      }
+    </section>
+  </div>
+
+  <!-- ===== Editor (sheet) ===== -->
+  <dialog class="sheet" id="editor" aria-labelledby="editor-title">
+    <form class="sheet__inner" id="editor-form">
+      <div class="sheet__head">
+        <h2 class="sheet__title" id="editor-title">Editar</h2>
+        <button type="button" class="sheet__close" data-close aria-label="Cerrar">&times;</button>
+      </div>
+
+      <div class="sheet__body">
+        <div class="form-error" id="editor-error" role="alert" aria-live="polite"></div>
+
+        <input type="hidden" name="id" id="f-id" />
+        <input type="hidden" name="entity" id="f-entity" />
+
+        <div class="field">
+          <label class="field__label" for="f-name">Nombre</label>
+          <input class="field__input" id="f-name" name="name" required maxlength="120" />
+        </div>
+
+        <div class="field-row" data-menu-only>
+          <div class="field" style="margin-bottom:0">
+            <label class="field__label" for="f-category">Categoría</label>
+            <select class="field__select" id="f-category" name="category">
+              {menuCategories.map((c) => <option value={c}>{c}</option>)}
+            </select>
+          </div>
+          <div class="field" style="margin-bottom:0">
+            <label class="field__label" for="f-price">Precio (MXN)</label>
+            <input
+              class="field__input"
+              id="f-price"
+              name="price"
+              type="number"
+              min="0"
+              step="0.01"
+              inputmode="decimal"
+            />
+          </div>
+        </div>
+
+        <div class="field" data-promo-only hidden>
+          <label class="field__label" for="f-badge">
+            Etiqueta <span class="field__hint">(opcional)</span>
+          </label>
+          <input class="field__input" id="f-badge" name="badge" maxlength="40" />
+        </div>
+
+        <div class="field">
+          <label class="field__label" for="f-description">Descripción</label>
+          <textarea class="field__textarea" id="f-description" name="description" maxlength="280"
+          ></textarea>
+        </div>
+
+        <div class="field image-picker" id="image-picker">
+          <span class="field__label">Imagen</span>
+          <div class="segmented" role="group" aria-label="Origen de la imagen">
+            <button type="button" class="segmented__btn" data-mode="url" aria-pressed="true">
+              Pegar URL
+            </button>
+            <button type="button" class="segmented__btn" data-mode="upload" aria-pressed="false">
+              Subir archivo
+            </button>
+          </div>
+
+          <input type="hidden" id="f-image-src" name="imageSrc" />
+
+          <div data-pane="url">
+            <input
+              class="field__input"
+              id="f-image-url"
+              type="url"
+              placeholder="https://…"
+              inputmode="url"
+            />
+          </div>
+
+          <div data-pane="upload" hidden>
+            <label class="image-picker__dropzone" id="dropzone">
+              <span>Arrastra una imagen o haz clic para elegir</span>
+              <span class="field__hint">JPG, PNG o WebP · máx 5 MB</span>
+              <input type="file" id="f-image-file" accept="image/*" hidden />
+            </label>
+          </div>
+
+          <div class="image-picker__preview">
+            <img class="image-picker__thumb" id="image-preview" data-empty="true" alt="" />
+          </div>
+        </div>
+
+        <div class="field">
+          <label class="field__label" for="f-image-alt">
+            Texto alternativo <span class="field__hint">(describe la imagen)</span>
+          </label>
+          <input class="field__input" id="f-image-alt" name="imageAlt" maxlength="160" />
+        </div>
+      </div>
+
+      <div class="sheet__foot">
+        <button type="button" class="abtn abtn--ghost" data-close>Cancelar</button>
+        <button type="submit" class="abtn abtn--primary" id="editor-save">Guardar</button>
+      </div>
+    </form>
+  </dialog>
+
+  <div class="toast-stack" id="toast-stack" aria-live="polite" aria-atomic="true"></div>
+
+  <script type="application/json" id="admin-data" set:html={bootstrap}></script>
+</AdminLayout>
+
+<script>
+  type ImageRef = { src: string; alt: string };
+  type MenuItem = {
+    id: string;
+    category: string;
+    name: string;
+    price: number;
+    description: string;
+    image: ImageRef;
+  };
+  type Promotion = {
+    id: string;
+    name: string;
+    description: string;
+    badge?: string;
+    image: ImageRef;
+  };
+  type Entity = 'menu' | 'promo';
+
+  const dataEl = document.getElementById('admin-data');
+  const store: { menu: MenuItem[]; promos: Promotion[] } = JSON.parse(dataEl?.textContent || '{}');
+
+  const $ = <T extends HTMLElement = HTMLElement>(id: string) => document.getElementById(id) as T;
+
+  const dialog = $('editor') as HTMLDialogElement;
+  const form = $('editor-form') as HTMLFormElement;
+  const titleEl = $('editor-title');
+  const errorEl = $('editor-error');
+  const saveBtn = $('editor-save') as HTMLButtonElement;
+
+  const fId = $('f-id') as HTMLInputElement;
+  const fEntity = $('f-entity') as HTMLInputElement;
+  const fName = $('f-name') as HTMLInputElement;
+  const fCategory = $('f-category') as HTMLSelectElement;
+  const fPrice = $('f-price') as HTMLInputElement;
+  const fBadge = $('f-badge') as HTMLInputElement;
+  const fDescription = $('f-description') as HTMLTextAreaElement;
+  const fImageSrc = $('f-image-src') as HTMLInputElement;
+  const fImageUrl = $('f-image-url') as HTMLInputElement;
+  const fImageFile = $('f-image-file') as HTMLInputElement;
+  const fImageAlt = $('f-image-alt') as HTMLInputElement;
+  const preview = $('image-preview') as HTMLImageElement;
+  const dropzone = $('dropzone');
+  const picker = $('image-picker');
+  const menuOnly = document.querySelector('[data-menu-only]') as HTMLElement;
+  const promoOnly = document.querySelector('[data-promo-only]') as HTMLElement;
+
+  let lastFocused: HTMLElement | null = null;
+
+  // ---------- Toasts ----------
+  const toast = (message: string, kind: 'ok' | 'error' = 'ok') => {
+    const stack = $('toast-stack');
+    const el = document.createElement('div');
+    el.className = 'toast' + (kind === 'error' ? ' toast--error' : '');
+    el.textContent = message;
+    stack.appendChild(el);
+    requestAnimationFrame(() => (el.dataset.show = 'true'));
+    setTimeout(() => {
+      el.dataset.show = 'false';
+      setTimeout(() => el.remove(), 250);
+    }, 2600);
+  };
+
+  // Toast persistido tras recargar (después de una mutación exitosa)
+  const pending = sessionStorage.getItem('cl_toast');
+  if (pending) {
+    sessionStorage.removeItem('cl_toast');
+    toast(pending);
+  }
+  const reloadWithToast = (message: string) => {
+    sessionStorage.setItem('cl_toast', message);
+    window.location.reload();
+  };
+
+  // ---------- Image picker ----------
+  const setImage = (src: string) => {
+    fImageSrc.value = src;
+    if (src) {
+      preview.src = src;
+      preview.dataset.empty = 'false';
+    } else {
+      preview.removeAttribute('src');
+      preview.dataset.empty = 'true';
+    }
+  };
+
+  const setMode = (mode: 'url' | 'upload') => {
+    picker.querySelectorAll<HTMLButtonElement>('.segmented__btn').forEach((btn) => {
+      btn.setAttribute('aria-pressed', String(btn.dataset.mode === mode));
+    });
+    (picker.querySelector('[data-pane="url"]') as HTMLElement).hidden = mode !== 'url';
+    (picker.querySelector('[data-pane="upload"]') as HTMLElement).hidden = mode !== 'upload';
+  };
+
+  picker.querySelectorAll<HTMLButtonElement>('.segmented__btn').forEach((btn) => {
+    btn.addEventListener('click', () => setMode(btn.dataset.mode as 'url' | 'upload'));
+  });
+
+  fImageUrl.addEventListener('input', () => setImage(fImageUrl.value.trim()));
+
+  const uploadFile = async (file: File) => {
+    if (!file.type.startsWith('image/')) {
+      toast('El archivo debe ser una imagen.', 'error');
+      return;
+    }
+    if (file.size > 5 * 1024 * 1024) {
+      toast('La imagen supera el límite de 5 MB.', 'error');
+      return;
+    }
+    dropzone.querySelector('span')!.textContent = 'Subiendo…';
+    const body = new FormData();
+    body.append('file', file);
+    try {
+      const res = await fetch('/api/admin/media', { method: 'POST', body });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || 'Error al subir');
+      setImage(data.url);
+      if (!fImageAlt.value.trim()) fImageAlt.value = file.name.replace(/\.[^.]+$/, '');
+      toast('Imagen subida.');
+    } catch (err) {
+      toast(err instanceof Error ? err.message : 'No se pudo subir la imagen.', 'error');
+    } finally {
+      dropzone.querySelector('span')!.textContent = 'Arrastra una imagen o haz clic para elegir';
+    }
+  };
+
+  fImageFile.addEventListener('change', () => {
+    const file = fImageFile.files?.[0];
+    if (file) uploadFile(file);
+  });
+  ['dragover', 'dragenter'].forEach((ev) =>
+    dropzone.addEventListener(ev, (e) => {
+      e.preventDefault();
+      dropzone.dataset.drag = 'true';
+    }),
+  );
+  ['dragleave', 'drop'].forEach((ev) =>
+    dropzone.addEventListener(ev, (e) => {
+      e.preventDefault();
+      dropzone.dataset.drag = 'false';
+    }),
+  );
+  dropzone.addEventListener('drop', (e) => {
+    const file = (e as DragEvent).dataTransfer?.files?.[0];
+    if (file) uploadFile(file);
+  });
+
+  // ---------- Open / close sheet ----------
+  const openEditor = (entity: Entity, id?: string) => {
+    form.reset();
+    errorEl.dataset.show = 'false';
+    fEntity.value = entity;
+    fId.value = id ?? '';
+    setMode('url');
+    fImageUrl.value = '';
+
+    const isMenu = entity === 'menu';
+    menuOnly.hidden = !isMenu;
+    promoOnly.hidden = isMenu;
+    fCategory.disabled = !isMenu;
+    fPrice.disabled = !isMenu;
+
+    if (id) {
+      const record = isMenu
+        ? store.menu.find((m) => m.id === id)
+        : store.promos.find((p) => p.id === id);
+      if (record) {
+        titleEl.textContent = isMenu ? 'Editar producto' : 'Editar promoción';
+        fName.value = record.name;
+        fDescription.value = record.description ?? '';
+        fImageAlt.value = record.image.alt ?? '';
+        fImageUrl.value = record.image.src ?? '';
+        setImage(record.image.src ?? '');
+        if (isMenu) {
+          fCategory.value = (record as MenuItem).category;
+          fPrice.value = String((record as MenuItem).price);
+        } else {
+          fBadge.value = (record as Promotion).badge ?? '';
+        }
+      }
+    } else {
+      titleEl.textContent = isMenu ? 'Nuevo producto' : 'Nueva promoción';
+      setImage('');
+    }
+
+    lastFocused = document.activeElement as HTMLElement;
+    dialog.showModal();
+    setTimeout(() => fName.focus(), 50);
+  };
+
+  const closeEditor = () => {
+    dialog.close();
+  };
+
+  dialog.addEventListener('close', () => {
+    lastFocused?.focus?.();
+  });
+  // Clic en el backdrop cierra
+  dialog.addEventListener('click', (e) => {
+    if (e.target === dialog) closeEditor();
+  });
+  document.querySelectorAll('[data-close]').forEach((btn) =>
+    btn.addEventListener('click', closeEditor),
+  );
+
+  // ---------- Submit ----------
+  form.addEventListener('submit', async (event) => {
+    event.preventDefault();
+    errorEl.dataset.show = 'false';
+
+    const entity = fEntity.value as Entity;
+    const id = fId.value;
+    const isMenu = entity === 'menu';
+
+    const payload: Record<string, unknown> = {
+      name: fName.value.trim(),
+      description: fDescription.value.trim(),
+      imageSrc: fImageSrc.value.trim(),
+      imageAlt: fImageAlt.value.trim(),
+    };
+    if (isMenu) {
+      payload.category = fCategory.value;
+      payload.price = Number(fPrice.value);
+    } else {
+      payload.badge = fBadge.value.trim();
+    }
+
+    if (!payload.name) return showFormError('El nombre es obligatorio.');
+    if (!payload.imageSrc) return showFormError('Agrega una imagen (URL o archivo).');
+    if (isMenu && (!Number.isFinite(payload.price) || (payload.price as number) < 0)) {
+      return showFormError('El precio debe ser un número válido.');
+    }
+
+    const base = isMenu ? '/api/admin/menu' : '/api/admin/promotions';
+    const url = id ? `${base}/${id}` : base;
+    const method = id ? 'PUT' : 'POST';
+
+    saveBtn.dataset.loading = 'true';
+    saveBtn.disabled = true;
+    try {
+      const res = await fetch(url, {
+        method,
+        headers: { 'content-type': 'application/json' },
+        body: JSON.stringify(payload),
+      });
+      const data = await res.json().catch(() => ({}));
+      if (!res.ok) throw new Error(data.error || 'No se pudo guardar.');
+      reloadWithToast(id ? 'Cambios guardados.' : 'Creado correctamente.');
+    } catch (err) {
+      showFormError(err instanceof Error ? err.message : 'No se pudo guardar.');
+      saveBtn.dataset.loading = 'false';
+      saveBtn.disabled = false;
+    }
+  });
+
+  function showFormError(message: string) {
+    errorEl.textContent = message;
+    errorEl.dataset.show = 'true';
+  }
+
+  // ---------- Row actions (delegación) ----------
+  document.addEventListener('click', async (event) => {
+    const target = event.target as HTMLElement;
+
+    const newBtn = target.closest<HTMLElement>('[data-new]');
+    if (newBtn) {
+      openEditor(newBtn.dataset.new as Entity);
+      return;
+    }
+
+    const row = target.closest<HTMLElement>('.admin-row');
+    if (!row) return;
+    const entity = row.dataset.entity as Entity;
+    const id = row.dataset.id!;
+
+    if (target.closest('[data-edit]')) {
+      openEditor(entity, id);
+      return;
+    }
+    if (target.closest('[data-delete]')) {
+      row.dataset.confirming = 'true';
+      return;
+    }
+    if (target.closest('[data-cancel-delete]')) {
+      row.dataset.confirming = 'false';
+      return;
+    }
+    if (target.closest('[data-confirm-delete]')) {
+      const btn = target.closest<HTMLButtonElement>('[data-confirm-delete]')!;
+      btn.dataset.loading = 'true';
+      const base = entity === 'menu' ? '/api/admin/menu' : '/api/admin/promotions';
+      try {
+        const res = await fetch(`${base}/${id}`, { method: 'DELETE' });
+        if (!res.ok) {
+          const data = await res.json().catch(() => ({}));
+          throw new Error(data.error || 'No se pudo eliminar.');
+        }
+        reloadWithToast('Eliminado.');
+      } catch (err) {
+        btn.dataset.loading = 'false';
+        row.dataset.confirming = 'false';
+        toast(err instanceof Error ? err.message : 'No se pudo eliminar.', 'error');
+      }
+    }
+  });
+</script>

@@ -1,0 +1,93 @@
+---
+import MenuRow from '@/components/ui/MenuRow.astro';
+import { menuSection, menuItems as fallbackMenuItems } from '@/config/menu';
+import type { MenuCategory } from '@/lib/menu-types';
+import { getMenuItems } from '@/lib/db';
+
+const { id, headline, subheadline } = menuSection;
+
+let menuItems = fallbackMenuItems;
+try {
+  menuItems = await getMenuItems();
+} catch (error) {
+  console.error('No se pudo cargar el menú desde la base de datos, usando respaldo.', error);
+}
+
+const categoryOrder: MenuCategory[] = ['Galletas', 'Sandwiches', 'Matcha', 'Bebidas'];
+
+const grouped = categoryOrder
+  .map((category) => ({
+    category,
+    items: menuItems.filter((item) => item.category === category),
+  }))
+  .filter((group) => group.items.length > 0);
+---
+
+<section class="menu" id={id} aria-labelledby="menu-heading">
+  <div class="menu__inner container">
+    <header class="menu__header">
+      <h2 id="menu-heading" class="headline">{headline}</h2>
+      <p class="section-lead">{subheadline}</p>
+    </header>
+
+    {
+      grouped.map(({ category, items }) => (
+        <div class="menu__group">
+          <h3 class="menu__group-title">{category}</h3>
+          <div class="menu__list" role="list">
+            {items.map((item) => (
+              <div class="menu__item" role="listitem">
+                <MenuRow
+                  name={item.name}
+                  price={item.price}
+                  description={item.description}
+                  image={item.image}
+                />
+              </div>
+            ))}
+          </div>
+        </div>
+      ))
+    }
+  </div>
+</section>
+
+<style>
+  .menu {
+    padding-block: var(--space-3xl);
+    background-color: var(--color-surface);
+  }
+
+  .menu__header {
+    margin-bottom: clamp(var(--space-xl), 5vw, var(--space-2xl));
+  }
+
+  .menu__group {
+    --menu-inset: clamp(1.25rem, 4vw, 1.75rem);
+  }
+
+  .menu__group + .menu__group {
+    margin-top: var(--space-2xl);
+  }
+
+  .menu__group-title {
+    margin: 0 0 var(--space-md);
+    padding-inline: var(--menu-inset);
+    font-family: var(--font-display);
+    font-size: clamp(1.25rem, 2.5vw, 1.5rem);
+    font-weight: 600;
+    color: var(--color-primary-deep);
+  }
+
+  .menu__list {
+    padding-inline: var(--menu-inset);
+    background-color: var(--color-bg);
+    border: 1px solid var(--color-line);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+  }
+
+  .menu__item:last-child .menu-row {
+    border-bottom: none;
+  }
+</style>

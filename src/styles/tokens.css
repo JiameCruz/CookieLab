@@ -1,0 +1,76 @@
+:root {
+  /* Colors — The Counter Palette (DESIGN.md) */
+  --color-primary: oklch(0.38 0.06 55);
+  --color-primary-deep: oklch(0.28 0.05 55);
+  --color-matcha: oklch(0.52 0.12 155);
+  --color-matcha-soft: oklch(0.95 0.025 155);
+  --color-brand-pink: oklch(0.82 0.08 350);
+  --color-brand-pink-soft: oklch(0.95 0.03 350);
+  --color-ink: oklch(0.22 0.012 160);
+  --color-muted: oklch(0.48 0.014 160);
+  --color-surface: oklch(0.97 0.004 155);
+  --color-line: oklch(0.90 0.008 155);
+  --color-bg: oklch(1 0 0);
+  --color-on-primary: oklch(1 0 0);
+  --color-on-matcha: oklch(1 0 0);
+  --color-danger: oklch(0.45 0.15 25);
+
+  /* Typography */
+  --font-display: 'Fredoka', system-ui, sans-serif;
+  --font-body: 'Nunito Sans', system-ui, sans-serif;
+  --text-display: clamp(2.25rem, 5.5vw, 4.25rem);
+  --text-headline: clamp(1.75rem, 3.5vw, 2.75rem);
+  --text-title: 1.25rem;
+  --text-body: 1rem;
+  --text-label: 0.8125rem;
+  --text-nav: 0.9375rem;
+  --text-price: 1.125rem;
+
+  --leading-display: 1.08;
+  --leading-headline: 1.15;
+  --leading-body: 1.55;
+
+  --tracking-display: -0.01em;
+  --tracking-headline: 0;
+  --tracking-label: 0.02em;
+
+  /* Spacing — 4pt base scale */
+  --space-xs: 0.25rem;
+  --space-sm: 0.5rem;
+  --space-md: 1rem;
+  --space-lg: 1.5rem;
+  --space-xl: 2.5rem;
+  --space-2xl: 4rem;
+  --space-3xl: clamp(4rem, 8vw, 6rem);
+
+  /* Radius */
+  --radius-sm: 6px;
+  --radius-md: 12px;
+  --radius-lg: 20px;
+  --radius-pill: 999px;
+
+  /* Elevation */
+  --shadow-lift-hover: 0 8px 24px oklch(0.22 0.012 160 / 0.08);
+  --shadow-logo-halo:
+    0 0 0 4px var(--color-brand-pink-soft),
+    0 12px 32px oklch(0.28 0.05 55 / 0.12);
+  --shadow-nav: 0 1px 0 var(--color-line);
+
+  /* Motion */
+  --ease-out-quart: cubic-bezier(0.25, 1, 0.5, 1);
+  --duration-fast: 150ms;
+  --duration-reveal: 480ms;
+
+  /* Layout */
+  --container-max: 72rem;
+  --container-narrow: 40rem;
+  --container-padding: clamp(1rem, 4vw, 2rem);
+  --nav-height: 4.5rem;
+
+  /* Z-index scale */
+  --z-nav: 100;
+  --z-nav-backdrop: 99;
+  --z-nav-dropdown: 101;
+  --z-hero-overlay: 1;
+  --z-hero-content: 2;
+}

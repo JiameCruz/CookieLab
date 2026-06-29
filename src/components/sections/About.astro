@@ -1,0 +1,104 @@
+---
+import { about } from '@/config/site';
+
+const { id, headline, paragraphs, image } = about;
+---
+
+<section class="about" id={id} aria-labelledby="about-heading">
+  <div class="about__inner container">
+    <figure class="about__figure">
+      <div class="about__logo-frame">
+        <img
+          class="about__logo"
+          src={image.src}
+          alt={image.alt}
+          width="320"
+          height="320"
+          loading="lazy"
+          decoding="async"
+        />
+      </div>
+    </figure>
+
+    <div class="about__content">
+      <h2 id="about-heading" class="headline">{headline}</h2>
+      {
+        paragraphs.map((paragraph) => (
+          <p class="about__paragraph">{paragraph}</p>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<style>
+  .about {
+    padding-block: var(--space-3xl);
+    background-color: var(--color-brand-pink-soft);
+  }
+
+  .about__inner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: clamp(var(--space-xl), 5vw, var(--space-2xl));
+  }
+
+  .about__figure {
+    margin: 0;
+    flex-shrink: 0;
+  }
+
+  .about__logo-frame {
+    width: clamp(11rem, 32vw, 16rem);
+    aspect-ratio: 1 / 1;
+    border-radius: 50%;
+    overflow: hidden;
+    box-shadow: var(--shadow-logo-halo);
+  }
+
+  .about__logo {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    border-radius: 50%;
+  }
+
+  .about__content {
+    max-width: 38rem;
+    text-align: center;
+  }
+
+  .about__paragraph {
+    margin: var(--space-md) 0 0;
+    font-size: clamp(1rem, 2vw, 1.0625rem);
+    line-height: var(--leading-body);
+    color: var(--color-ink);
+    text-wrap: pretty;
+  }
+
+  .about__paragraph:first-of-type {
+    margin-top: var(--space-lg);
+  }
+
+  @media (min-width: 768px) {
+    .about__inner {
+      flex-direction: row;
+      align-items: center;
+      justify-content: center;
+      gap: clamp(var(--space-2xl), 6vw, 5rem);
+    }
+
+    .about__content {
+      max-width: 32rem;
+      text-align: left;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .about__logo-frame {
+      width: 18rem;
+    }
+  }
+</style>

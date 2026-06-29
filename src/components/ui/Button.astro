@@ -1,0 +1,82 @@
+---
+interface Props {
+  href: string;
+  label: string;
+  variant?: 'primary' | 'matcha' | 'ghost';
+  class?: string;
+}
+
+const { href, label, variant = 'primary', class: className = '' } = Astro.props;
+---
+
+<a
+  href={href}
+  class:list={['btn', `btn--${variant}`, className]}
+>
+  {label}
+</a>
+
+<style>
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 2.75rem;
+    padding: 0.875rem 1.75rem;
+    font-family: var(--font-display);
+    font-size: var(--text-nav);
+    font-weight: 600;
+    letter-spacing: 0.01em;
+    text-decoration: none;
+    border: none;
+    border-radius: var(--radius-pill);
+    cursor: pointer;
+    transition:
+      background-color var(--duration-fast) var(--ease-out-quart),
+      color var(--duration-fast) var(--ease-out-quart),
+      transform var(--duration-fast) var(--ease-out-quart),
+      box-shadow var(--duration-fast) var(--ease-out-quart);
+  }
+
+  .btn--primary {
+    color: var(--color-on-primary);
+    background-color: var(--color-primary);
+  }
+
+  .btn--primary:hover {
+    background-color: var(--color-primary-deep);
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-lift-hover);
+  }
+
+  .btn--matcha {
+    color: var(--color-on-matcha);
+    background-color: var(--color-matcha);
+  }
+
+  .btn--matcha:hover {
+    filter: brightness(0.94);
+    transform: translateY(-1px);
+  }
+
+  .btn--ghost {
+    color: var(--color-ink);
+    background-color: transparent;
+  }
+
+  .btn--ghost:hover {
+    background-color: var(--color-surface);
+  }
+
+  .btn:focus-visible {
+    outline: 2px solid var(--color-matcha);
+    outline-offset: 2px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .btn:hover {
+      transform: none;
+      box-shadow: none;
+    }
+  }
+</style>

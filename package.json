@@ -1,0 +1,24 @@
+{
+  "name": "cookinglab",
+  "type": "module",
+  "version": "0.0.1",
+  "packageManager": "pnpm@11.8.0",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview"
+  },
+  "dependencies": {
+    "@astrojs/vercel": "^9.0.5",
+    "@neondatabase/serverless": "^1.1.0",
+    "astro": "^5.7.0",
+    "jose": "^6.2.3",
+    "ws": "^8.21.0"
+  },
+  "devDependencies": {
+    "@types/ws": "^8.18.1"
+  }
+}

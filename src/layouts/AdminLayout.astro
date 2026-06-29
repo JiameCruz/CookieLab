@@ -1,0 +1,68 @@
+---
+import { site } from '@/config/site';
+import '@/styles/global.css';
+import '@/styles/admin.css';
+
+interface Props {
+  title?: string;
+  showChrome?: boolean;
+}
+
+const { title = 'Panel', showChrome = true } = Astro.props;
+const user = Astro.locals.user;
+const pageTitle = `${title} · ${site.name}`;
+---
+
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex, nofollow" />
+    <meta name="generator" content={Astro.generator} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600&family=Nunito+Sans:opsz,wght@6..12,400;6..12,600&display=swap"
+      rel="stylesheet"
+    />
+    <title>{pageTitle}</title>
+  </head>
+  <body class="admin">
+    {
+      showChrome && (
+        <header class="admin-topbar">
+          <div class="admin-topbar__inner container">
+            <a class="admin-brand" href="/admin">
+              {site.name}
+              <span class="admin-brand__tag">Panel</span>
+            </a>
+            <div class="admin-topbar__spacer"></div>
+            <a class="admin-topbar__link" href="/" target="_blank" rel="noopener">
+              Ver sitio
+            </a>
+            {user && <span class="admin-topbar__user">{user.email}</span>}
+            <button type="button" class="abtn abtn--ghost abtn--sm" data-logout>
+              Cerrar sesión
+            </button>
+          </div>
+        </header>
+      )
+    }
+
+    <main class="admin-main">
+      <slot />
+    </main>
+
+    <script>
+      document.querySelector('[data-logout]')?.addEventListener('click', async () => {
+        try {
+          await fetch('/api/session', { method: 'DELETE' });
+        } finally {
+          window.location.href = '/admin/login';
+        }
+      });
+    </script>
+  </body>
+</html>

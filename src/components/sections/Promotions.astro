@@ -1,0 +1,59 @@
+---
+import PromoFeature from '@/components/ui/PromoFeature.astro';
+import { promotionsSection, promotions as fallbackPromotions } from '@/config/menu';
+import { getPromotions } from '@/lib/db';
+
+const { id, headline, subheadline } = promotionsSection;
+
+let promotions = fallbackPromotions;
+try {
+  promotions = await getPromotions();
+} catch (error) {
+  console.error('No se pudieron cargar las promociones desde la base de datos, usando respaldo.', error);
+}
+---
+
+<section class="promotions" id={id} aria-labelledby="promotions-heading">
+  <div class="promotions__inner container">
+    <header class="promotions__header">
+      <h2 id="promotions-heading" class="headline">{headline}</h2>
+      <p class="section-lead">{subheadline}</p>
+    </header>
+
+    <div class="promotions__grid" role="list">
+      {
+        promotions.map((promo) => (
+          <div class="promotions__item" role="listitem">
+            <PromoFeature
+              name={promo.name}
+              description={promo.description}
+              badge={promo.badge}
+              image={promo.image}
+            />
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<style>
+  .promotions {
+    padding-block: var(--space-3xl);
+    background-color: var(--color-bg);
+  }
+
+  .promotions__header {
+    margin-bottom: clamp(var(--space-xl), 5vw, var(--space-2xl));
+  }
+
+  .promotions__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 18rem), 1fr));
+    gap: var(--space-lg);
+  }
+
+  .promotions__item {
+    min-width: 0;
+  }
+</style>

@@ -1,0 +1,164 @@
+---
+import { delivery } from '@/config/site';
+
+const { id, headline, subheadline, platforms } = delivery;
+---
+
+<section class="delivery" id={id} aria-labelledby="delivery-heading">
+  <div class="delivery__inner container">
+    <header class="delivery__header">
+      <h2 id="delivery-heading" class="headline">{headline}</h2>
+      <p class="section-lead">{subheadline}</p>
+    </header>
+
+    <div class="delivery__grid">
+      {
+        platforms.map((platform) => (
+          <a
+            class={`delivery__btn delivery__btn--${platform.id}`}
+            href={platform.href}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label={`${platform.action} — se abre en una pestaña nueva`}
+          >
+            <span class="delivery__btn-main">
+              <span class="delivery__name">{platform.name}</span>
+              <span class="delivery__action">{platform.action}</span>
+            </span>
+            <span class="delivery__arrow" aria-hidden="true">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                <path
+                  d="M7 17L17 7M17 7H9M17 7v8"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"></path>
+              </svg>
+            </span>
+          </a>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<style>
+  .delivery {
+    padding-block: var(--space-3xl);
+    background-color: var(--color-bg);
+  }
+
+  .delivery__header {
+    margin-bottom: clamp(var(--space-xl), 5vw, var(--space-2xl));
+    max-width: 42rem;
+  }
+
+  .delivery__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 18rem), 1fr));
+    gap: clamp(var(--space-md), 3vw, var(--space-lg));
+  }
+
+  .delivery__btn {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-lg);
+    min-height: clamp(5.5rem, 14vw, 7.5rem);
+    padding: clamp(1.25rem, 3vw, 1.75rem) clamp(1.5rem, 4vw, 2rem);
+    font-family: var(--font-body);
+    text-decoration: none;
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-lift-hover);
+    transition:
+      transform var(--duration-fast) var(--ease-out-quart),
+      box-shadow var(--duration-fast) var(--ease-out-quart),
+      filter var(--duration-fast) var(--ease-out-quart);
+  }
+
+  .delivery__btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 32px oklch(0.22 0.012 160 / 0.12);
+  }
+
+  .delivery__btn:active {
+    transform: scale(0.985);
+  }
+
+  .delivery__btn:focus-visible {
+    outline: 3px solid var(--color-matcha);
+    outline-offset: 3px;
+  }
+
+  .delivery__btn-main {
+    display: grid;
+    gap: var(--space-xs);
+    min-width: 0;
+  }
+
+  .delivery__name {
+    font-family: var(--font-display);
+    font-size: clamp(1.375rem, 3.5vw, 1.75rem);
+    font-weight: 600;
+    line-height: 1.15;
+    letter-spacing: -0.01em;
+    text-wrap: balance;
+  }
+
+  .delivery__action {
+    font-size: clamp(0.9375rem, 2vw, 1rem);
+    font-weight: 600;
+    line-height: 1.4;
+    opacity: 0.92;
+  }
+
+  .delivery__arrow {
+    display: inline-flex;
+    flex-shrink: 0;
+    align-items: center;
+    justify-content: center;
+    width: 2.75rem;
+    height: 2.75rem;
+    border-radius: var(--radius-pill);
+    background-color: oklch(1 0 0 / 0.16);
+  }
+
+  .delivery__btn--ubereats {
+    color: oklch(1 0 0);
+    background-color: oklch(0.22 0.02 155);
+  }
+
+  .delivery__btn--ubereats:hover {
+    filter: brightness(1.08);
+  }
+
+  .delivery__btn--ubereats .delivery__action {
+    color: oklch(0.78 0.14 155);
+  }
+
+  .delivery__btn--rappi {
+    color: oklch(1 0 0);
+    background-color: oklch(0.62 0.2 35);
+  }
+
+  .delivery__btn--rappi:hover {
+    filter: brightness(1.06);
+  }
+
+  .delivery__btn--rappi .delivery__action {
+    color: oklch(0.96 0.04 85);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .delivery__btn:hover,
+    .delivery__btn:active {
+      transform: none;
+    }
+  }
+
+  @media (min-width: 640px) {
+    .delivery__grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+</style>

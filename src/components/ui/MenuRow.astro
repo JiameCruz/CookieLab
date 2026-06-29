@@ -1,0 +1,129 @@
+---
+import { formatPrice } from '@/config/menu';
+
+interface Props {
+  name: string;
+  price: number;
+  description?: string;
+  image: {
+    src: string;
+    alt: string;
+  };
+}
+
+const { name, price, description, image } = Astro.props;
+---
+
+<article class="menu-row">
+  <img
+    class="menu-row__thumb"
+    src={image.src}
+    alt={image.alt}
+    width="72"
+    height="72"
+    loading="lazy"
+    decoding="async"
+  />
+
+  <div class="menu-row__body">
+    <h3 class="menu-row__title">{name}</h3>
+    {description && <p class="menu-row__desc">{description}</p>}
+  </div>
+
+  <span class="menu-row__price">{formatPrice(price)}</span>
+</article>
+
+<style>
+  .menu-row {
+    display: flex;
+    align-items: center;
+    gap: var(--space-md);
+    padding-block: var(--space-md);
+    border-bottom: 1px solid var(--color-line);
+    background-color: var(--color-bg);
+    transition: background-color var(--duration-fast) var(--ease-out-quart);
+  }
+
+  .menu-row:hover {
+    background-color: var(--color-surface);
+  }
+
+  .menu-row__thumb {
+    flex-shrink: 0;
+    width: 4.5rem;
+    height: 4.5rem;
+    border-radius: var(--radius-md);
+    object-fit: cover;
+    transition:
+      transform var(--duration-fast) var(--ease-out-quart),
+      box-shadow var(--duration-fast) var(--ease-out-quart);
+  }
+
+  .menu-row:hover .menu-row__thumb {
+    transform: scale(1.03);
+    box-shadow: var(--shadow-lift-hover);
+  }
+
+  .menu-row__body {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .menu-row__title {
+    margin: 0;
+    font-family: var(--font-body);
+    font-size: var(--text-title);
+    font-weight: 600;
+    line-height: 1.25;
+    color: var(--color-ink);
+  }
+
+  .menu-row__desc {
+    margin: 0.25rem 0 0;
+    font-size: 0.9375rem;
+    line-height: 1.4;
+    color: var(--color-muted);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .menu-row__price {
+    flex-shrink: 0;
+    margin-left: var(--space-sm);
+    font-family: var(--font-body);
+    font-size: var(--text-price);
+    font-weight: 600;
+    color: var(--color-primary-deep);
+    white-space: nowrap;
+    text-align: right;
+  }
+
+  @media (max-width: 480px) {
+    .menu-row {
+      flex-wrap: wrap;
+      align-items: flex-start;
+    }
+
+    .menu-row__price {
+      width: 100%;
+      margin-left: calc(4.5rem + var(--space-md));
+      margin-top: calc(var(--space-xs) * -1);
+      text-align: left;
+    }
+
+    .menu-row__desc {
+      white-space: normal;
+      display: -webkit-box;
+      -webkit-line-clamp: 1;
+      -webkit-box-orient: vertical;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .menu-row:hover .menu-row__thumb {
+      transform: none;
+      box-shadow: none;
+    }
+  }
+</style>

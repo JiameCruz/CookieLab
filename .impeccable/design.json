@@ -1,0 +1,266 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-06-28T12:00:00.000Z",
+  "title": "Design System: CookingLab",
+  "extensions": {
+    "colorMeta": {
+      "primary": {
+        "role": "primary",
+        "displayName": "Cookie Chocolate",
+        "canonical": "oklch(0.38 0.06 55)",
+        "tonalRamp": [
+          "oklch(0.18 0.04 55)",
+          "oklch(0.24 0.05 55)",
+          "oklch(0.30 0.055 55)",
+          "oklch(0.38 0.06 55)",
+          "oklch(0.46 0.055 55)",
+          "oklch(0.58 0.045 55)",
+          "oklch(0.72 0.03 55)",
+          "oklch(0.88 0.015 55)"
+        ]
+      },
+      "brand-pink": {
+        "role": "tertiary",
+        "displayName": "Frosting Pink",
+        "canonical": "oklch(0.82 0.08 350)",
+        "tonalRamp": [
+          "oklch(0.35 0.10 350)",
+          "oklch(0.48 0.11 350)",
+          "oklch(0.58 0.10 350)",
+          "oklch(0.68 0.09 350)",
+          "oklch(0.75 0.085 350)",
+          "oklch(0.82 0.08 350)",
+          "oklch(0.90 0.05 350)",
+          "oklch(0.95 0.03 350)"
+        ]
+      },
+      "matcha": {
+        "role": "secondary",
+        "displayName": "Matcha Field",
+        "canonical": "oklch(0.52 0.12 155)",
+        "tonalRamp": [
+          "oklch(0.22 0.06 155)",
+          "oklch(0.32 0.09 155)",
+          "oklch(0.42 0.11 155)",
+          "oklch(0.52 0.12 155)",
+          "oklch(0.62 0.10 155)",
+          "oklch(0.75 0.06 155)",
+          "oklch(0.88 0.03 155)",
+          "oklch(0.95 0.025 155)"
+        ]
+      },
+      "ink": {
+        "role": "neutral",
+        "displayName": "Ink",
+        "canonical": "oklch(0.22 0.012 160)",
+        "tonalRamp": [
+          "oklch(0.12 0.010 160)",
+          "oklch(0.18 0.011 160)",
+          "oklch(0.22 0.012 160)",
+          "oklch(0.32 0.013 160)",
+          "oklch(0.48 0.014 160)",
+          "oklch(0.65 0.010 160)",
+          "oklch(0.82 0.006 160)",
+          "oklch(0.97 0.004 160)"
+        ]
+      },
+      "bg": {
+        "role": "neutral",
+        "displayName": "Counter White",
+        "canonical": "oklch(1 0 0)",
+        "tonalRamp": [
+          "oklch(0.22 0.012 160)",
+          "oklch(0.48 0.014 160)",
+          "oklch(0.75 0.006 160)",
+          "oklch(0.90 0.008 155)",
+          "oklch(0.95 0.03 350)",
+          "oklch(0.97 0.004 155)",
+          "oklch(0.99 0.002 155)",
+          "oklch(1 0 0)"
+        ]
+      }
+    },
+    "typographyMeta": {
+      "script": {
+        "displayName": "Brand Script",
+        "purpose": "Hero lockups and one-line brand moments only — Bonheur Royale Spencerian."
+      },
+      "display": {
+        "displayName": "Display",
+        "purpose": "Section headlines when script is not used — Fredoka rounded."
+      },
+      "body": {
+        "displayName": "Body",
+        "purpose": "Descriptions, admin copy, menu scan text — Nunito Sans max 65ch."
+      },
+      "price": {
+        "displayName": "Price",
+        "purpose": "Menu row pricing — always scannable on mobile, never script."
+      }
+    },
+    "shadows": [
+      {
+        "name": "lift-hover",
+        "value": "0 8px 24px oklch(0.22 0.012 160 / 0.08)",
+        "purpose": "Hover only on primary buttons and menu thumbnails — never full rows."
+      },
+      {
+        "name": "logo-halo",
+        "value": "0 0 0 4px oklch(0.95 0.03 350), 0 12px 32px oklch(0.28 0.05 55 / 0.12)",
+        "purpose": "Circular logo frame in About — brand exception, not card pattern."
+      },
+      {
+        "name": "nav-hairline",
+        "value": "0 1px 0 oklch(0.90 0.008 155)",
+        "purpose": "Sticky navigation bottom edge."
+      },
+      {
+        "name": "script-coffee-shadow",
+        "value": "0 1px 0 oklch(0.28 0.05 55), 0 3px 12px oklch(0.28 0.05 55 / 0.35)",
+        "purpose": "Pink Script headline variant — painted-on-counter effect."
+      }
+    ],
+    "motion": [
+      {
+        "name": "ease-out-quart",
+        "value": "cubic-bezier(0.25, 1, 0.5, 1)",
+        "purpose": "Default hover and state transitions."
+      },
+      {
+        "name": "duration-fast",
+        "value": "150ms",
+        "purpose": "Buttons, chips, menu row hover."
+      },
+      {
+        "name": "duration-reveal",
+        "value": "480ms",
+        "purpose": "Hero image fade-in; disabled under prefers-reduced-motion."
+      }
+    ],
+    "breakpoints": [
+      { "name": "sm", "value": "640px" },
+      { "name": "md", "value": "768px" },
+      { "name": "lg", "value": "1024px" }
+    ]
+  },
+  "components": [
+    {
+      "name": "Pink Script Headline",
+      "kind": "custom",
+      "refersTo": "script",
+      "description": "Hero brand line — Frosting Pink with coffee shadow. One line per fold.",
+      "html": "<h1 class=\"ds-script-headline\">Galletas hechas hoy</h1>",
+      "css": ".ds-script-headline { margin: 0; font-family: \"Bonheur Royale\", \"Segoe Script\", cursive; font-size: clamp(2.75rem, 9vw, 5.5rem); font-weight: 400; line-height: 1.05; letter-spacing: 0.01em; color: #E8A4B8; text-shadow: 0 1px 0 #2A1F1B, 0 3px 12px oklch(0.28 0.05 55 / 0.35); text-wrap: balance; }"
+    },
+    {
+      "name": "Primary Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "Main CTA — Ver menú, pedir, admin save.",
+      "html": "<a class=\"ds-btn-primary\" href=\"#menu\">Ver menú</a>",
+      "css": ".ds-btn-primary { display: inline-flex; align-items: center; justify-content: center; min-height: 2.75rem; background: #3D2E28; color: #FFFFFF; padding: 14px 28px; font-family: \"Nunito Sans\", system-ui, sans-serif; font-size: 0.9375rem; font-weight: 600; letter-spacing: 0.01em; text-decoration: none; border: none; border-radius: 999px; cursor: pointer; transition: background 150ms cubic-bezier(0.25, 1, 0.5, 1), transform 150ms cubic-bezier(0.25, 1, 0.5, 1), box-shadow 150ms cubic-bezier(0.25, 1, 0.5, 1); } .ds-btn-primary:hover { background: #2A1F1B; transform: translateY(-1px); box-shadow: 0 8px 24px oklch(0.22 0.012 160 / 0.08); } .ds-btn-primary:focus-visible { outline: 2px solid #3A7A5E; outline-offset: 2px; }"
+    },
+    {
+      "name": "Matcha Button",
+      "kind": "button",
+      "refersTo": "button-matcha",
+      "description": "Matcha category action — secondary brand voice.",
+      "html": "<button class=\"ds-btn-matcha\" type=\"button\">Matcha</button>",
+      "css": ".ds-btn-matcha { background: #3A7A5E; color: #FFFFFF; padding: 14px 28px; font-family: \"Nunito Sans\", system-ui, sans-serif; font-size: 0.9375rem; font-weight: 600; border: none; border-radius: 999px; cursor: pointer; transition: filter 150ms cubic-bezier(0.25, 1, 0.5, 1), transform 150ms cubic-bezier(0.25, 1, 0.5, 1); } .ds-btn-matcha:hover { filter: brightness(0.94); transform: translateY(-1px); } .ds-btn-matcha:focus-visible { outline: 2px solid #3D2E28; outline-offset: 2px; }"
+    },
+    {
+      "name": "Category Chip",
+      "kind": "chip",
+      "refersTo": "chip-category",
+      "description": "Active menu category filter.",
+      "html": "<button class=\"ds-chip\" type=\"button\" aria-pressed=\"true\">Galletas</button>",
+      "css": ".ds-chip { background: #E8F2EC; color: #3A7A5E; padding: 8px 14px; font-family: \"Nunito Sans\", system-ui, sans-serif; font-size: 0.8125rem; font-weight: 600; letter-spacing: 0.02em; border: none; border-radius: 999px; cursor: pointer; transition: background 150ms cubic-bezier(0.25, 1, 0.5, 1), color 150ms cubic-bezier(0.25, 1, 0.5, 1); } .ds-chip[aria-pressed=\"false\"] { background: #F5F8F6; color: #1A2420; } .ds-chip:focus-visible { outline: 2px solid #3A7A5E; outline-offset: 2px; }"
+    },
+    {
+      "name": "Menu Row",
+      "kind": "custom",
+      "refersTo": "menu-row",
+      "description": "Signature list item — thumbnail, name, short desc, price. Flat at rest.",
+      "html": "<article class=\"ds-menu-row\"><img class=\"ds-menu-row__thumb\" src=\"https://images.unsplash.com/photo-1558961363-fa8aad8c6832?auto=format&fit=crop&w=144&q=80\" alt=\"Galleta S'mores con chocolate y malvavisco\" width=\"72\" height=\"72\" /><div class=\"ds-menu-row__body\"><h3 class=\"ds-menu-row__title\">Galleta S'mores</h3><p class=\"ds-menu-row__desc\">Bombón, galleta María y Hershey.</p></div><span class=\"ds-menu-row__price\">$46.00</span></article>",
+      "css": ".ds-menu-row { display: flex; align-items: center; gap: 16px; padding: 16px 0; border-bottom: 1px solid #DDE5E1; background: #FFFFFF; transition: background 150ms cubic-bezier(0.25, 1, 0.5, 1); } .ds-menu-row:hover { background: #F5F8F6; } .ds-menu-row__thumb { width: 72px; height: 72px; border-radius: 12px; object-fit: cover; flex-shrink: 0; transition: box-shadow 150ms cubic-bezier(0.25, 1, 0.5, 1); } .ds-menu-row:hover .ds-menu-row__thumb { box-shadow: 0 8px 24px oklch(0.22 0.012 160 / 0.08); } .ds-menu-row__body { flex: 1; min-width: 0; } .ds-menu-row__title { margin: 0; font-family: \"Nunito Sans\", system-ui, sans-serif; font-size: 1.25rem; font-weight: 600; color: #2A1F1B; line-height: 1.25; } .ds-menu-row__desc { margin: 4px 0 0; font-family: \"Nunito Sans\", system-ui, sans-serif; font-size: 0.9375rem; color: #5F6B66; line-height: 1.4; } .ds-menu-row__price { font-family: \"Nunito Sans\", system-ui, sans-serif; font-size: 1.125rem; font-weight: 600; color: #1A2420; white-space: nowrap; }"
+    },
+    {
+      "name": "Admin Text Field",
+      "kind": "input",
+      "refersTo": "button-ghost",
+      "description": "Admin menu editor — product name or price.",
+      "html": "<label class=\"ds-field\"><span class=\"ds-field__label\">Precio</span><input class=\"ds-field__input\" type=\"text\" inputmode=\"decimal\" placeholder=\"46.00\" /></label>",
+      "css": ".ds-field { display: flex; flex-direction: column; gap: 6px; font-family: \"Nunito Sans\", system-ui, sans-serif; } .ds-field__label { font-size: 0.8125rem; font-weight: 600; letter-spacing: 0.02em; color: #1A2420; } .ds-field__input { padding: 12px 14px; font-size: 1rem; color: #1A2420; background: #FFFFFF; border: 1px solid #DDE5E1; border-radius: 6px; transition: border-color 150ms cubic-bezier(0.25, 1, 0.5, 1); } .ds-field__input::placeholder { color: #5F6B66; } .ds-field__input:focus { outline: none; border: 2px solid #3A7A5E; padding: 11px 13px; }"
+    },
+    {
+      "name": "Site Navigation",
+      "kind": "nav",
+      "refersTo": "button-ghost",
+      "description": "Sticky top nav — Menú, Promociones, Nosotros. Brand in Fredoka, not script.",
+      "html": "<nav class=\"ds-nav\" aria-label=\"Principal\"><a class=\"ds-nav__brand\" href=\"/\">CookingLab</a><ul class=\"ds-nav__links\"><li><a class=\"ds-nav__link ds-nav__link--active\" href=\"#menu\" aria-current=\"page\">Menú</a></li><li><a class=\"ds-nav__link\" href=\"#promociones\">Promociones</a></li></ul></nav>",
+      "css": ".ds-nav { display: flex; align-items: center; justify-content: space-between; padding: 16px 24px; background: #FFFFFF; border-bottom: 1px solid #DDE5E1; font-family: \"Nunito Sans\", system-ui, sans-serif; } .ds-nav__brand { font-family: \"Fredoka\", system-ui, sans-serif; font-size: 1.25rem; font-weight: 600; color: #2A1F1B; text-decoration: none; letter-spacing: -0.01em; } .ds-nav__brand:hover { color: #3D2E28; } .ds-nav__links { display: flex; gap: 24px; list-style: none; margin: 0; padding: 0; } .ds-nav__link { font-size: 0.9375rem; font-weight: 600; color: #5F6B66; text-decoration: none; padding-bottom: 2px; border-bottom: 2px solid transparent; transition: color 150ms cubic-bezier(0.25, 1, 0.5, 1), border-color 150ms cubic-bezier(0.25, 1, 0.5, 1); } .ds-nav__link:hover { color: #1A2420; } .ds-nav__link--active { color: #1A2420; border-bottom-color: #3A7A5E; }"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Cookie Counter",
+    "overview": "CookingLab se siente como el mostrador de un café-boutique donde la gente se inclina para ver qué hay hoy: cálido, directo, un poco juguetón — pero nunca franquicia. Referencia The Cookie Lab MX — producto real, tono artesanal-contemporáneo; script Spencerian en momentos de marca, sans redondeada para escanear el menú, rosa de marca sobre chocolate profundo.",
+    "keyCharacteristics": [
+      "Mostrador, no vitrina clínica — calidez en tipografía y scrim rosa",
+      "Script Bonheur Royale + Fredoka + Nunito Sans",
+      "Chocolate + matcha + Frosting Pink como tercera voz",
+      "Menú en filas editoriales, no grid de cards",
+      "Plano por defecto — sombras solo en hover puntual"
+    ],
+    "rules": [
+      {
+        "name": "The Product Carries Warmth Rule",
+        "body": "Nunca compenses la falta de fotografía con fondos sand/linen/parchment.",
+        "section": "colors"
+      },
+      {
+        "name": "The Frosting Cap Rule",
+        "body": "Frosting Pink ocupa ≤12% del viewport en cualquier pantalla.",
+        "section": "colors"
+      },
+      {
+        "name": "The Matcha Accent Cap Rule",
+        "body": "Matcha Field ocupa ≤15% del viewport en páginas de menú.",
+        "section": "colors"
+      },
+      {
+        "name": "The Script Sparingly Rule",
+        "body": "Bonheur Royale solo en hero, lockup de marca y promos editoriales (máx. una línea).",
+        "section": "typography"
+      },
+      {
+        "name": "The Menu Scan Rule",
+        "body": "Title + Price deben leerse en un solo vistazo (<2 s).",
+        "section": "typography"
+      },
+      {
+        "name": "The Flat Menu Rule",
+        "body": "Las filas de menú no llevan box-shadow en reposo ni wrapper tipo card.",
+        "section": "elevation"
+      }
+    ],
+    "dos": [
+      "Do usar fotografía de producto real en hero y thumbnails de menú.",
+      "Do reservar Bonheur Royale para una línea de marca por fold — con sombra chocolate si el relleno es Frosting Pink.",
+      "Do listar el menú en filas editoriales con precio visible ($46.00).",
+      "Do mantener Frosting Pink para identidad (hero scrim, logo halo, promos puntuales).",
+      "Do respetar prefers-reduced-motion.",
+      "Do alinear el panel admin a los mismos tokens."
+    ],
+    "donts": [
+      "Don't usar fondos cream/beige/parchment/sand.",
+      "Don't imitar fast food / cadena masiva.",
+      "Don't caer en SaaS genérico.",
+      "Don't usar script en precios, formularios admin o nav.",
+      "Don't usar border-left de acento en filas de menú.",
+      "Don't poner gradient text ni glassmorphism decorativo.",
+      "Don't repetir eyebrow uppercase tracked sobre cada sección.",
+      "Don't convertir el menú en un grid de cards con sombra en reposo.",
+      "Don't sustituir fotografía con bloques de color plano."
+    ]
+  }
+}

@@ -1,0 +1,21 @@
+.headline {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: var(--text-headline);
+  font-weight: 600;
+  line-height: var(--leading-headline);
+  letter-spacing: var(--tracking-headline);
+  color: var(--color-primary-deep);
+  text-wrap: balance;
+}
+
+.section-lead {
+  margin: var(--space-md) 0 0;
+  max-width: 38ch;
+  font-family: var(--font-body);
+  font-style: normal;
+  font-size: clamp(1rem, 2vw, 1.0625rem);
+  line-height: var(--leading-body);
+  color: var(--color-muted);
+  text-wrap: pretty;
+}
