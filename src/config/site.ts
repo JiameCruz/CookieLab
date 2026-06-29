@@ -1,5 +1,5 @@
 export const site = {
-  name: 'CookingLab',
+  name: 'The Cookie Labs',
   tagline: 'Galletas, sandwiches y matcha — hechos con intención.',
   description:
     'Coffee shop contemporáneo especializado en galletas artesanales, sandwiches y matcha. Producto real, sabor cuidado.',
