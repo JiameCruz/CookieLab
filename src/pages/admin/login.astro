@@ -1,5 +1,6 @@
 ---
 import AdminLayout from '@/layouts/AdminLayout.astro';
+import { site } from '@/config/site';
 
 export const prerender = false;
 
@@ -10,7 +11,7 @@ const safeRedirect = redirect.startsWith('/admin') ? redirect : '/admin';
 <AdminLayout title="Entrar" showChrome={false}>
   <div class="login">
     <div class="login__panel">
-      <div class="login__brand">CookingLab</div>
+      <div class="login__brand">{site.name}</div>
       <p class="login__lead">Panel del mostrador</p>
 
       <form class="login__form" id="login-form" novalidate data-redirect={safeRedirect}>

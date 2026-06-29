@@ -1,5 +1,5 @@
 export const site = {
-  name: 'The Cookie Labs',
+  name: 'The cookie lab',
   tagline: 'Galletas, sandwiches y matcha — hechos con intención.',
   description:
     'Coffee shop contemporáneo especializado en galletas artesanales, sandwiches y matcha. Producto real, sabor cuidado.',
@@ -37,7 +37,7 @@ export const about = {
   id: 'nosotros',
   headline: 'Galletas de laboratorio, corazón de barrio',
   paragraphs: [
-    'CookingLab nació como un espacio para experimentar con sabor: probar combinaciones, hornear al momento y servir matcha de origen con la misma exigencia que nuestras galletas.',
+    'The cookie lab nació como un espacio para experimentar con sabor: probar combinaciones, hornear al momento y servir matcha de origen con la misma exigencia que nuestras galletas.',
     'No somos una cadena ni un menú congelado. Cada lote sale del horno con ingredientes reales — chocolate que se derrite, masa que se parte, matcha que se ve y se siente.',
     'Ven por una galleta, quédate por el ritual. Aquí el producto manda y el resto es aire.',
   ],

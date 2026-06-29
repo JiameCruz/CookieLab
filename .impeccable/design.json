@@ -1,7 +1,7 @@
 {
   "schemaVersion": 2,
   "generatedAt": "2026-06-28T12:00:00.000Z",
-  "title": "Design System: CookingLab",
+  "title": "Design System: The cookie lab",
   "extensions": {
     "colorMeta": {
       "primary": {
@@ -197,13 +197,13 @@
       "kind": "nav",
       "refersTo": "button-ghost",
       "description": "Sticky top nav — Menú, Promociones, Nosotros. Brand in Fredoka, not script.",
-      "html": "<nav class=\"ds-nav\" aria-label=\"Principal\"><a class=\"ds-nav__brand\" href=\"/\">CookingLab</a><ul class=\"ds-nav__links\"><li><a class=\"ds-nav__link ds-nav__link--active\" href=\"#menu\" aria-current=\"page\">Menú</a></li><li><a class=\"ds-nav__link\" href=\"#promociones\">Promociones</a></li></ul></nav>",
+      "html": "<nav class=\"ds-nav\" aria-label=\"Principal\"><a class=\"ds-nav__brand\" href=\"/\">The cookie lab</a><ul class=\"ds-nav__links\"><li><a class=\"ds-nav__link ds-nav__link--active\" href=\"#menu\" aria-current=\"page\">Menú</a></li><li><a class=\"ds-nav__link\" href=\"#promociones\">Promociones</a></li></ul></nav>",
       "css": ".ds-nav { display: flex; align-items: center; justify-content: space-between; padding: 16px 24px; background: #FFFFFF; border-bottom: 1px solid #DDE5E1; font-family: \"Nunito Sans\", system-ui, sans-serif; } .ds-nav__brand { font-family: \"Fredoka\", system-ui, sans-serif; font-size: 1.25rem; font-weight: 600; color: #2A1F1B; text-decoration: none; letter-spacing: -0.01em; } .ds-nav__brand:hover { color: #3D2E28; } .ds-nav__links { display: flex; gap: 24px; list-style: none; margin: 0; padding: 0; } .ds-nav__link { font-size: 0.9375rem; font-weight: 600; color: #5F6B66; text-decoration: none; padding-bottom: 2px; border-bottom: 2px solid transparent; transition: color 150ms cubic-bezier(0.25, 1, 0.5, 1), border-color 150ms cubic-bezier(0.25, 1, 0.5, 1); } .ds-nav__link:hover { color: #1A2420; } .ds-nav__link--active { color: #1A2420; border-bottom-color: #3A7A5E; }"
     }
   ],
   "narrative": {
     "northStar": "The Cookie Counter",
-    "overview": "CookingLab se siente como el mostrador de un café-boutique donde la gente se inclina para ver qué hay hoy: cálido, directo, un poco juguetón — pero nunca franquicia. Referencia The Cookie Lab MX — producto real, tono artesanal-contemporáneo; script Spencerian en momentos de marca, sans redondeada para escanear el menú, rosa de marca sobre chocolate profundo.",
+    "overview": "The cookie lab se siente como el mostrador de un café-boutique donde la gente se inclina para ver qué hay hoy: cálido, directo, un poco juguetón — pero nunca franquicia. Referencia The Cookie Lab MX — producto real, tono artesanal-contemporáneo; script Spencerian en momentos de marca, sans redondeada para escanear el menú, rosa de marca sobre chocolate profundo.",
     "keyCharacteristics": [
       "Mostrador, no vitrina clínica — calidez en tipografía y scrim rosa",
       "Script Bonheur Royale + Fredoka + Nunito Sans",

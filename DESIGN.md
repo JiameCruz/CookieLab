@@ -1,5 +1,5 @@
 ---
-name: CookingLab
+name: The cookie lab
 description: Coffee shop digital brand — cookies, sandwiches, matcha. Counter-warm, script-forward, product-first.
 colors:
   primary: "#3D2E28"
@@ -104,13 +104,13 @@ components:
     padding: "8px 14px"
 ---
 
-# Design System: CookingLab
+# Design System: The cookie lab
 
 ## 1. Overview
 
 **Creative North Star: "The Cookie Counter"**
 
-CookingLab se siente como el mostrador de un café-boutique donde la gente se inclina para ver qué hay hoy: cálido, directo, un poco juguetón — pero nunca franquicia. La referencia [The Cookie Lab MX](https://www.instagram.com/thecookielabmxx) aporta producto real y tono artesanal-contemporáneo; la interfaz traduce eso con tipografía script en momentos de marca (como el logotipo pintado a mano), sans redondeada para escanear el menú, y toques de rosa de marca sobre chocolate profundo.
+The cookie lab se siente como el mostrador de un café-boutique donde la gente se inclina para ver qué hay hoy: cálido, directo, un poco juguetón — pero nunca franquicia. La referencia [The Cookie Lab MX](https://www.instagram.com/thecookielabmxx) aporta producto real y tono artesanal-contemporáneo; la interfaz traduce eso con tipografía script en momentos de marca (como el logotipo pintado a mano), sans redondeada para escanear el menú, y toques de rosa de marca sobre chocolate profundo.
 
 El visitante llega en móvil, a menudo de pie frente al mostrador. La pantalla prioriza nombres legibles, precios visibles y categorías claras (Galletas · Sandwiches · Matcha · Café). El panel admin comparte tokens pero reduce ornamentación: utilidad sin romper la voz.
 

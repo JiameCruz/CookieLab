@@ -12,11 +12,11 @@ if (!connectionString) {
 
 declare global {
   // eslint-disable-next-line no-var
-  var __cookinglabPool: Pool | undefined;
+  var __theCookieLabPool: Pool | undefined;
 }
 
-const pool = globalThis.__cookinglabPool ?? new Pool({ connectionString });
-if (import.meta.env.DEV) globalThis.__cookinglabPool = pool;
+const pool = globalThis.__theCookieLabPool ?? new Pool({ connectionString });
+if (import.meta.env.DEV) globalThis.__theCookieLabPool = pool;
 
 /** Driver HTTP puro para bytea — evita WebSocket en Vercel. */
 const mediaSql = neon(connectionString);

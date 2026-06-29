@@ -12,7 +12,7 @@ brand
 
 ## Product Purpose
 
-CookingLab es la presencia digital de un coffee shop especializado en galletas, sandwiches y matcha. La app expone la marca y el marketing del negocio: quiénes son, qué venden y por qué importa. El valor principal en la primera versión es **diseño de marca excepcional** y **personalización del menú** desde un panel admin.
+The cookie lab es la presencia digital de un coffee shop especializado en galletas, sandwiches y matcha. La app expone la marca y el marketing del negocio: quiénes son, qué venden y por qué importa. El valor principal en la primera versión es **diseño de marca excepcional** y **personalización del menú** desde un panel admin.
 
 Éxito = un visitante entiende la oferta en segundos, confía en la calidad del producto, y un admin puede actualizar el menú sin ayuda técnica.
 
