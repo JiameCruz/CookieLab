@@ -1,6 +1,7 @@
 // Crea el usuario administrador en Neon Auth (idempotente).
 // Uso: node --env-file=.env scripts/create-admin.mjs
 const base = process.env.PUBLIC_NEON_AUTH_URL;
+const origin = process.env.ADMIN_ORIGIN ?? 'http://localhost:4321';
 if (!base) {
   console.error('Falta PUBLIC_NEON_AUTH_URL en el entorno (.env).');
   process.exit(1);
@@ -11,8 +12,13 @@ const password = 'admin123';
 
 const res = await fetch(`${base}/sign-up/email`, {
   method: 'POST',
-  headers: { 'content-type': 'application/json' },
-  body: JSON.stringify({ email, password, name: 'Admin' }),
+  headers: { 'content-type': 'application/json', origin },
+  body: JSON.stringify({
+    email,
+    password,
+    name: 'Admin',
+    callbackURL: `${origin}/admin`,
+  }),
 });
 
 const data = await res.json().catch(() => ({}));
