@@ -1,4 +1,4 @@
-import { Pool, neonConfig } from '@neondatabase/serverless';
+import { Pool, neon, neonConfig } from '@neondatabase/serverless';
 import type { MenuCategory, MenuItem, Promotion } from '@/lib/menu-types';
 
 // En Vercel/serverless, WebSocket (Pool+ws) falla; HTTP fetch sí funciona.
@@ -17,6 +17,9 @@ declare global {
 
 const pool = globalThis.__cookinglabPool ?? new Pool({ connectionString });
 if (import.meta.env.DEV) globalThis.__cookinglabPool = pool;
+
+/** Driver HTTP puro para bytea — evita WebSocket en Vercel. */
+const mediaSql = neon(connectionString);
 
 type MenuItemRow = {
   id: string;
@@ -195,18 +198,16 @@ export async function deletePromotion(id: string): Promise<boolean> {
 // ---------- Media (archivos subidos) ----------
 
 export async function saveMedia(mime: string, bytes: Buffer): Promise<string> {
-  const { rows } = await pool.query<{ id: string }>(
-    `INSERT INTO public.media (mime, bytes) VALUES ($1, $2) RETURNING id`,
-    [mime, bytes],
-  );
-  return rows[0].id;
+  const rows = await mediaSql`
+    INSERT INTO public.media (mime, bytes) VALUES (${mime}, ${bytes}) RETURNING id
+  `;
+  return rows[0].id as string;
 }
 
 export async function getMedia(id: string): Promise<{ mime: string; bytes: Buffer } | null> {
-  const { rows } = await pool.query<{ mime: string; bytes: Buffer }>(
-    `SELECT mime, bytes FROM public.media WHERE id = $1`,
-    [id],
-  );
+  const rows = await mediaSql`
+    SELECT mime, bytes FROM public.media WHERE id = ${id}
+  `;
   if (!rows[0]) return null;
-  return { mime: rows[0].mime, bytes: Buffer.from(rows[0].bytes) };
+  return { mime: rows[0].mime as string, bytes: Buffer.from(rows[0].bytes as Buffer) };
 }
