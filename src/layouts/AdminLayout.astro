@@ -43,9 +43,9 @@ const pageTitle = `${title} · ${site.name}`;
               Ver sitio
             </a>
             {user && <span class="admin-topbar__user">{user.email}</span>}
-            <button type="button" class="abtn abtn--ghost abtn--sm" data-logout>
+            <a href="/api/logout" class="abtn abtn--ghost abtn--sm">
               Cerrar sesión
-            </button>
+            </a>
           </div>
         </header>
       )
@@ -54,21 +54,5 @@ const pageTitle = `${title} · ${site.name}`;
     <main class="admin-main">
       <slot />
     </main>
-
-    <script>
-      document.querySelector('[data-logout]')?.addEventListener('click', async () => {
-        try {
-          const res = await fetch('/api/session', {
-            method: 'DELETE',
-            credentials: 'same-origin',
-          });
-          // #region agent log
-          fetch('http://127.0.0.1:7873/ingest/7a56214f-3513-4cc5-8395-f173e93a5f8f',{method:'POST',headers:{'Content-Type':'application/json','X-Debug-Session-Id':'96bc5d'},body:JSON.stringify({sessionId:'96bc5d',runId:'logout-debug',hypothesisId:'H2-fetch-fails',location:'AdminLayout.astro:logout',message:'logout fetch result',data:{ok:res.ok,status:res.status},timestamp:Date.now()})}).catch(()=>{});
-          // #endregion
-        } finally {
-          window.location.href = '/admin/login';
-        }
-      });
-    </script>
   </body>
 </html>

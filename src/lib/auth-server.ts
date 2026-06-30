@@ -133,3 +133,11 @@ export function sessionCookieDeleteOptions(secure: boolean) {
   const { maxAge: _maxAge, ...rest } = sessionCookieOptions(secure);
   return rest;
 }
+
+/** Detecta HTTPS real (Vercel envía x-forwarded-proto). */
+export function isSecureRequest(request: Request): boolean {
+  const proto = request.headers.get('x-forwarded-proto')?.split(',')[0].trim();
+  if (proto === 'https') return true;
+  if (proto === 'http') return false;
+  return import.meta.env.PROD;
+}
