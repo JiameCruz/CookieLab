@@ -3,6 +3,7 @@ import {
   authenticate,
   createSessionToken,
   SESSION_COOKIE,
+  sessionCookieDeleteOptions,
   sessionCookieOptions,
 } from '@/lib/auth-server';
 
@@ -57,7 +58,18 @@ export const POST: APIRoute = async ({ request, cookies }) => {
   return json({ ok: true });
 };
 
-export const DELETE: APIRoute = async ({ cookies }) => {
-  cookies.delete(SESSION_COOKIE, { path: '/' });
+export const DELETE: APIRoute = async ({ cookies, request }) => {
+  const isProd = import.meta.env.PROD;
+  const deleteOpts = sessionCookieDeleteOptions(isProd);
+  const hadSessionCookie = Boolean(
+    request.headers.get('cookie')?.split(';').some((part) => part.trim().startsWith(`${SESSION_COOKIE}=`)),
+  );
+
+  cookies.delete(SESSION_COOKIE, deleteOpts);
+
+  // #region agent log
+  fetch('http://127.0.0.1:7873/ingest/7a56214f-3513-4cc5-8395-f173e93a5f8f',{method:'POST',headers:{'Content-Type':'application/json','X-Debug-Session-Id':'96bc5d'},body:JSON.stringify({sessionId:'96bc5d',runId:'logout-debug',hypothesisId:'H1-cookie-opts',location:'session.ts:DELETE',message:'logout delete cookie',data:{isProd,hadSessionCookie,deleteOpts,host:request.headers.get('host')},timestamp:Date.now()})}).catch(()=>{});
+  // #endregion
+
   return json({ ok: true });
 };

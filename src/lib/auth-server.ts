@@ -127,3 +127,9 @@ export function sessionCookieOptions(secure: boolean) {
     maxAge: MAX_AGE,
   };
 }
+
+/** Opciones para borrar la cookie; deben coincidir con las de sessionCookieOptions. */
+export function sessionCookieDeleteOptions(secure: boolean) {
+  const { maxAge: _maxAge, ...rest } = sessionCookieOptions(secure);
+  return rest;
+}
